@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <a href="{{ url_for('produtos') }}" class="icone-canto-esquerdo">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <h2 style="text-align: center;">Editar Produto</h2>
+
+    <div class="container-editar">
+        <form action="" method="post" enctype="multipart/form-data">
+            <label for="nome"><b>Nome</b></label>
+            <input type="text" name="nome" value="{{ produto.nome }}" required><br>
+
+            <label for="descricao"><b>Descrição</b></label>
+            <textarea name="descricao" required>{{ produto.descricao }}</textarea><br>
+
+            <label for="preco"><b>Preço</b></label>
+            <input type="number" step="0.01" name="preco" value="{{ produto.preco }}" required><br>
+
+            <label for="imagem"><b>Imagem do Produto</b></label><br>
+            {% if produto.imagem %}
+                <img src="{{ url_for('static', filename='uploads/' ~ produto.imagem) }}" class="img-produtos" alt="Imagem atual" style="max-width: 200px;"><br>
+            {% else %}
+                <p>Sem imagem cadastrada.</p>
+            {% endif %}
+            <input type="file" name="imagem" accept="image/*"><br><br>
+
+            <button type="submit" class="atualizar">Atualizar</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="container-footer">
+            <div class="row-footer">
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="">Logo</a></li>
+                        <li><a href="">LinkedIn</a></li>
+                        <li><a href="">Facebook</a></li>
+                        <li><a href="">Instagram</a></li>
+                        <li><a href="">#confeitariadama</a></li>
+                        <li><a href="">#damalovers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Home page</h4>
+                    <ul>
+                        <li><a href="">Loja online</a></li>
+                        <li><a href="">Petito Gatito</a></li>
+                        <li><a href="">Sobre</a></li>
+                        <li><a href="">Nossas lojas</a></li>
+                        <li><a href="">FAQ</a></li>
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Minha conta</a></li>
+                        <li><a href="">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="">Delivery</a></li>
+                        <li><a href="">19 99123 4567</a></li>
+                        <li><a href="">Eventos</a></li>
+                        <li><a href="">19 98765 4321</a></li>
+                        <li><a href="">Trabalhe conosco</a></li>
+                        <li><a href="">recrutamento@confeitariagatito.com.br</a></li>
+                        <li><a href="">Marketing</a></li>
+                        <li><a href="">marketing@confeitariagatito.com.br</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

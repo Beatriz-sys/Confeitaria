@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{nome_produto}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <!--linha para computadores-->
+    <div class="fluid">Faca agora seu pedido onnline</div>
+
+    <!--menu-->
+
+    <!--se possivel, mudar nav. Nao ta tao responvia, queria colocar um menu-hamburger-->
+    <header>
+        <span class="logotipo">Gatito</span>
+       
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Loja onnline</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                {% if 'usuario' in session %}
+                <li><p>Olá, {{ session['usuario'] }} |
+                    <a href="{{ url_for('editar_conta') }}">Editar Conta</a> |
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </p>
+                {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}</li>
+                <li><a href="{{ url_for('produtos') }}">Produtos</a></li>
+            </ul>
+        </nav>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <p class="carrinho-title">Carrinho</p>
+            <p class="carrinho-text">Nenhum produto no carrinho</p>
+            <a>Loja onnline</a>
+
+            <a class="carrinho-button" href="{{ url_for('home') }}">Retornar para a loja</a>
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <a onclick="openNav()" class="off-canvas">
+            <img class="img-sacola" src="{{ url_for('static', filename='images/sacola.png') }}" alt="sacola">
+        </a>
+
+        <script>
+
+            // Espera o conteúdo da página carregar
+            document.addEventListener("DOMContentLoaded", function () {
+                const btnMais = document.querySelector(".mais");
+                const btnMenos = document.querySelector(".menos");
+                const numeroSpan = document.querySelector(".numero");
+
+                // Função para atualizar a quantidade no span
+                function atualizarQuantidade(novaQtd) {
+                    if (novaQtd < 1) {
+                        novaQtd = 1; // Quantidade mínima = 1
+                    }
+                    numeroSpan.textContent = novaQtd;
+                }
+
+                btnMais.addEventListener("click", function () {
+                    let qtdAtual = parseInt(numeroSpan.textContent);
+                    atualizarQuantidade(qtdAtual + 1);
+                });
+
+                btnMenos.addEventListener("click", function () {
+                    let qtdAtual = parseInt(numeroSpan.textContent);
+                    atualizarQuantidade(qtdAtual - 1);
+                });
+            });
+            /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+        </script>
+
+    </header>
+
+    <!--para pagina de compra, img, nome_produto, preco_produto, descricao_produto
+    qtd e adcionar ao carrinho-->
+    <!--produtos relacionados, rodape-->
+
+    <!--em telas medias e pequenas: img width, flex-column-->
+    <div id="main">
+
+        <div class="container-geral">
+            <div class="img-compra">
+                <img class="imagem" src="{{ url_for('static', filename='images/cesta_cafe.jpg') }}" alt="">
+            </div>
+
+            <div class="resto-compra">
+                <p class="nome_produto">Cesta da cafe da manha</p>
+                <p><b>R$430,00 - R$490,00</b> </p>
+                <p class="descricao_produto">A cesta preferida dos nossos clientes!<br>Está cesta contém: 2 croissants tradicionais;<br> 1 croissant amêndoas;<br> 2 fatias de bolo;<br> 2 palmiers;<br> 2 mini geleias;<br> 2 águas; 2 sucos;<br> 1 conjunto de xícaras GATITO;<br> 2 drip coffee e <br> 2 iogurtes com granola e frutas vermelhas. <br>Essa cesta acompanha uma térmica e serve 2 pessoas <br><br>*Cestinha dourada apenas para composição da foto, não acompanha.</p>
+                <div class="botoes-compra">
+                    <div class="quantidade">
+                        <button class="menos">-</button>
+                        <span class="numero">1</span>
+                        <button class="mais">+</button>
+                    </div>
+                    <div class="btn-add_carrinho">
+                        <button type="submit" class="add-carrinho">Adcionar ao carrinho</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--roadape-->
+        <footer>
+            <div class="container-footer">
+                <div class="row-footer">
+                    <div class="footer-col">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="">logo</a></li>
+                            <li><a href="">linkedln</a></li>
+                            <li><a href="">facebook</a></li>
+                            <li><a href="">instagram</a></li>
+                            <li><a href="">#confeitariadama</a></li>
+                            <li><a href="">#damalovers</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>Home page</h4>
+                        <ul>
+                            <li><a href="">Loja online</a></li>
+                            <li><a href="">Petito Gatito</a></li>
+                            <li><a href="">Sobre</a></li>
+                            <li><a href="">Nossas lojas</a></li>
+                            <li><a href="">FAQ</a></li>
+                            <li><a href="">Blog</a></li>
+                            <li><a href="">Minha conta</a></li>
+                            <li><a href="">Contato</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>Contato</h4>
+                        <ul>
+                            <li><a href="">Delivery</a></li>
+                            <li><a href="">19 99123 4567</a></li>
+                            <li><a href="">Eventos</a></li>
+                            <li><a href="">19 98765 4321</a></li>
+                            <li><a href="">Trabalhe conosco</a></li>
+                            <li><a href="">recrutamento@confeitariagatito.com.br</a></li>
+                            <li><a href="">Marketing</a></li>
+                            <li><a href="">marketing@confeitariagatito.com.br</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+</body>

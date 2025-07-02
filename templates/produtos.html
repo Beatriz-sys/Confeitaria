@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+    <!--linha para computadores-->
+    <div class="fluid">Faça agora seu pedido onnline</div>
+
+    <!--menu-->
+
+    <!--se possivel, mudar nav. Nao ta tao responvia, queria colocar um menu-hamburger-->
+    <header>
+        <span class="logotipo">Gatito</span>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Loja onnline</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                {% if 'usuario' in session %}
+                <li><p>Olá, {{ session['usuario'] }} |
+                    <a href="{{ url_for('editar_conta') }}">Editar Conta</a> |
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </p>
+                {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}</li>
+                <li><a href="{{ url_for('produtos') }}">Produtos</a></li>
+            </ul>
+        </nav>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <p class="carrinho-title">Carrinho</p>
+            <p class="carrinho-text">Nenhum produto no carrinho</p>
+            <a>Loja onnline</a>
+
+            <a class="carrinho-button" href="{{ url_for('home') }}">Retornar para a loja</a>
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <a onclick="openNav()" class="off-canvas">
+            <img src="sacola.png" class="img-sacola" alt="">
+        </a>
+
+        <script>
+            /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+        </script>
+    </header>
+
+    <h1>Produtos</h1>
+
+    <div class="tabela-container">
+        <table class="tabela-produtos">
+            <thead>
+                <tr>
+                    <th>Lista de produtos</th>
+                    <th></th>
+                    <th></th>
+                    <th><a href="{{ url_for('novo') }}"> <i class="fas fa-plus"></i> </a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>
+                        {% if produto.imagem %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ produto.imagem) }}" class="img-produtos"
+                            alt="{{ produto.nome }}">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='sem-imagem.png') }}" class="img-produtos"
+                            alt="Sem imagem">
+                        {% endif %}
+                    </td>
+                    <td>{{ produto.nome }}</td>
+                    <td>R$ {{ produto.preco }}</td>
+                    <td>
+                        <a href="{{ url_for('editar', id=produto.id) }}" class="botao-acao">
+                            <i class="fas fa-edit"></i>
+                        </a> |
+                        <a href="{{ url_for('excluir', id=produto.id) }}" class="botao-acao"
+                            onclick="return confirmarExclusao()"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function confirmarExclusao() {
+            return confirm("Tem certeza que deseja excluir o produto? Esta ação não poderá ser desfeita.");
+        }
+    </script>
+
+    <!--roadape-->
+    <footer>
+        <div class="container-footer">
+            <div class="row-footer">
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="">logo</a></li>
+                        <li><a href="">linkedln</a></li>
+                        <li><a href="">facebook</a></li>
+                        <li><a href="">instagram</a></li>
+                        <li><a href="">#confeitariadama</a></li>
+                        <li><a href="">#damalovers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Home page</h4>
+                    <ul>
+                        <li><a href="">Loja online</a></li>
+                        <li><a href="">Petito Gatito</a></li>
+                        <li><a href="">Sobre</a></li>
+                        <li><a href="">Nossas lojas</a></li>
+                        <li><a href="">FAQ</a></li>
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Minha conta</a></li>
+                        <li><a href="">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="">Delivery</a></li>
+                        <li><a href="">19 99123 4567</a></li>
+                        <li><a href="">Eventos</a></li>
+                        <li><a href="">19 98765 4321</a></li>
+                        <li><a href="">Trabalhe conosco</a></li>
+                        <li><a href="">recrutamento@confeitariagatito.com.br</a></li>
+                        <li><a href="">Marketing</a></li>
+                        <li><a href="">marketing@confeitariagatito.com.br</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

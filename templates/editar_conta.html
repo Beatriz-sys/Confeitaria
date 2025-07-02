@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Conta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="linha">
+        <h1>Editar Conta</h1>
+
+        <!-- Formulário de Edição -->
+        <form method="POST">
+            <div class="form-input">
+                <label>Nome:</label>
+                <input type="text" name="nome" value="{{ user.nome }}" required><br>
+            </div>
+
+            <div class="form-input">
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ user.email }}" required><br>
+            </div>
+
+            <div class="form-input">
+                <label>Senha:</label>
+                <input type="password" name="senha" value="{{ user.senha }}" required><br>
+            </div>
+
+            <div class="form-input">
+                <button type="submit">Salvar Alterações</button>
+            </div>
+        </form>
+
+        <!-- Formulário de Exclusão SEPARADO -->
+        <form method="POST" action="{{ url_for('excluir_conta') }}"
+            onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')" >
+            <button type="submit" style="background-color: red; color: white; margin-top: 10px;">Excluir Conta</button>
+        </form>
+
+        <a href="{{ url_for('home') }}">Cancelar</a>
+    
+    </div>
+</body>
+
+</html>

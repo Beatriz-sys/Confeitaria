@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatito Confeitaria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!--linha para computadores-->
+    <div class="fluid">Faca agora seu pedido onnline</div>
+
+    <!--menu-->
+
+    <!--se possivel, mudar nav. Nao ta tao responvia, queria colocar um menu-hamburger-->
+    <header>
+        <span class="logotipo">Gatito</span>
+     
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Loja onnline</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                {% if 'usuario' in session %}
+                <li><p>Olá, {{ session['usuario'] }} |
+                    <a href="{{ url_for('editar_conta') }}">Editar Conta</a> |
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </p>
+                {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}</li>
+                <li><a href="{{ url_for('produtos') }}">Produtos</a></li>
+            </ul>
+        </nav>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <p class="carrinho-title">Carrinho</p>
+            <p class="carrinho-text">Nenhum produto no carrinho</p>
+            <a>Loja onnline</a>
+
+            <a class="carrinho-button" href="{{ url_for('home') }}">Retornar para a loja</a>
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <a onclick="openNav()" class="off-canvas">
+            <img class="img-sacola" src="{{ url_for('static', filename='images/sacola.png') }}" alt="sacola">
+        </a>
+
+        <script>
+            /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+        </script>
+    </header>
+
+    <!--slideshow-->
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <img src="{{ url_for('static', filename='images/im77.jpg') }}" alt="Imagem 1">
+            <div class="slider-text">
+                <h1>RECEBA EM CASA</h1>
+                <p><button class="btn-slider">CONFIRA</button></p>
+            </div>
+        </div>
+
+        <div class="slide fade">
+            <img src="{{ url_for('static', filename='images/im88.jpg') }}" alt="Imagem 2">
+            <div class="slider-text">
+                <hr>
+                <h1>CESTAS DE CAFÉ DA MANHÃ</h1>
+                <hr>
+                <p><button class="btn-slider">CONFIRA</button></p>
+            </div>
+        </div>
+
+        <div class="slide fade">
+            <img src="{{ url_for('static', filename='images/im99.jpg') }}" alt="Imagem 3">
+            <div class="slider-text">
+                <h1>PRESENTEIE ALGUÉM ESPECIAL</h1>
+                <p><button class="btn-slider">CONFIRA</button></p>
+            </div>
+        </div>
+
+        <!-- Botões -->
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
+    </div>
+
+    <!-- Pontinhos de navegação (opcional) -->
+    <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        let slides = document.getElementsByClassName("slide");
+        let dots = document.getElementsByClassName("dot");
+        let timer;
+
+        function showSlide(index) {
+            if (index >= slides.length) slideIndex = 0;
+            if (index < 0) slideIndex = slides.length - 1;
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+
+            slides[slideIndex].style.display = "block";
+            dots[slideIndex].classList.add("active");
+        }
+
+        function nextSlide(n) {
+            slideIndex += n;
+            showSlide(slideIndex);
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlide(slideIndex);
+        }
+
+        // Botões
+        document.querySelector('.prev').addEventListener('click', () => {
+            nextSlide(-1);
+            resetTimer();
+        });
+
+        document.querySelector('.next').addEventListener('click', () => {
+            nextSlide(1);
+            resetTimer();
+        });
+
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].addEventListener('click', () => {
+                currentSlide(i);
+                resetTimer();
+            });
+        }
+
+        // Autoplay
+        function startSlideshow() {
+            timer = setInterval(() => {
+                nextSlide(1);
+            }, 7000); // 4 segundos
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            startSlideshow();
+        }
+
+        // Inicialização
+        showSlide(slideIndex);
+        startSlideshow();
+    </script>
+
+    <!--box bonitinha-->
+    <div class="container1">
+        <div class="container2">
+            <div class="itens">
+
+                <img class="img2" src="https://confeitariadama.com.br/wp-content/uploads/2019/07/sacola.png" alt="">
+                <p>Entregas refrigeradas</p>
+            </div>
+            <div class="itens">
+                <img class="img2" id="carrinho"
+                    src="https://confeitariadama.com.br/wp-content/uploads/2021/03/confeitaria-dama-delivery.png"
+                    alt="">
+                <p>Entregadores de carro</p>
+            </div>
+            <div class="itens">
+                <img class="img2"
+                    src="https://confeitariadama.com.br/wp-content/uploads/2021/03/confeitaria-dama-relogio.png" alt="">
+                <p>Envio agendado</p>
+            </div>
+
+            <div class="itens">
+                Pedidos feitos até 12h serão entregues até 18h do mesmo dia. <br>
+                Após este horário o prazo de entrega é até 1 dia útil até às 18h, após confirmação de pagamento. <br>
+                Os pedidos com entrega agendada devem ser feitos com 1 dia de antecedência.
+            </div>
+        </div>
+    </div>
+
+    <!---->
+    <p class="title-produtos">Produtos</p>
+    <hr>
+    <div class="produtos-container">
+        <div class="produtos">
+
+            <img src="{{ url_for('static', filename='images/mil-folhas.png') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('milfolhas_buy') }}">Mil folhas</a>
+            </p>
+        </div>
+
+        <div class="produtos">
+
+            <img src="{{ url_for('static', filename='images/cestas.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('cestas_buy') }}">Cestas</a>
+            </p>
+        </div>
+
+        <div class="produtos">
+            <img src="{{ url_for('static', filename='images/eclairs.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('eclairs_buy') }}">Eclairs</a>
+            </p>
+        </div>
+
+        <div class="produtos">
+            <img src="{{ url_for('static', filename='images/gateus.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('gateus_buy') }}">Gateus</a>
+            </p>
+        </div>
+
+        <div class="produtos">
+            <img src="{{ url_for('static', filename='images/bolos.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('milfolhas_buy') }}">Bolos</a>
+            </p>
+        </div>
+
+        <div class="produtos">
+            <img src="{{ url_for('static', filename='images/dama-emporio.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('milfolhas_buy') }}">Dama-emporio</a>
+            </p>
+        </div>
+
+        <div class="produtos last-child">
+            <img src="{{ url_for('static', filename='images/presentes.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('milfolhas_buy') }}">Presentes</a>
+            </p>
+        </div>
+
+        <div class="produtos last-child">
+            <img src="{{ url_for('static', filename='images/mil-tradicional.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('milfolhas_buy') }}">Mil folhas Tradicional</a>
+            </p>
+        </div>
+
+        <div class="produtos last-child">
+            <img src="{{ url_for('static', filename='images/tortas.jpg') }}" alt="">
+            <p class="name-produto">
+                <a class="a-produto" href="{{ url_for('milfolhas_buy') }}">Tortas</a>
+            </p>
+        </div>
+    </div>
+
+    <!--roadape-->
+    <footer>
+        <div class="container-footer">
+            <div class="row-footer">
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="">logo</a></li>
+                        <li><a href="">linkedln</a></li>
+                        <li><a href="">facebook</a></li>
+                        <li><a href="">instagram</a></li>
+                        <li><a href="">#confeitariadama</a></li>
+                        <li><a href="">#damalovers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Home page</h4>
+                    <ul>
+                        <li><a href="">Loja online</a></li>
+                        <li><a href="">Petito Gatito</a></li>
+                        <li><a href="">Sobre</a></li>
+                        <li><a href="">Nossas lojas</a></li>
+                        <li><a href="">FAQ</a></li>
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Minha conta</a></li>
+                        <li><a href="">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="">Delivery</a></li>
+                        <li><a href="">19 99123 4567</a></li>
+                        <li><a href="">Eventos</a></li>
+                        <li><a href="">19 98765 4321</a></li>
+                        <li><a href="">Trabalhe conosco</a></li>
+                        <li><a href="">recrutamento@confeitariagatito.com.br</a></li>
+                        <li><a href="">Marketing</a></li>
+                        <li><a href="">marketing@confeitariagatito.com.br</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Confeitaria Gatito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!--<div class="container">-->
+        <div class="linha">
+            <h1>Login</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            
+                <form method="POST">
+                    <div class="form-input">
+                        <label for="email">Email:</label><br>
+                        <input type="email" name="email" required><br><br>
+                    </div>
+
+                    <div class="form-input">
+                        <label for="senha">Senha:</label><br>
+                        <input type="password" name="senha" required><br><br>
+                    </div>
+
+                    <div class="form-input">
+                        <button type="submit">Entrar</button>
+                    </div>
+
+                </form>
+            
+        
+        <p>Não tem conta? <a href="{{ url_for('register') }}">Cadastre-se aqui</a></p>
+
+    </div>
+</body>
+</html>

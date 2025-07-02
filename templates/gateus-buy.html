@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <!--linha para computadores-->
+    <div class="fluid">Faca agora seu pedido onnline</div>
+
+    <!--menu-->
+
+    <!--se possivel, mudar nav. Nao ta tao responvia, queria colocar um menu-hamburger-->
+    <header>
+        <span class="logotipo">Gatito</span>
+       
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Loja onnline</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                {% if 'usuario' in session %}
+                <li><p>Olá, {{ session['usuario'] }} |
+                    <a href="{{ url_for('editar_conta') }}">Editar Conta</a> |
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </p>
+                {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}</li>
+                <li><a href="{{ url_for('produtos') }}">Produtos</a></li>
+            </ul>
+        </nav>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <p class="carrinho-title">Carrinho</p>
+            <p class="carrinho-text">Nenhum produto no carrinho</p>
+            <a>Loja onnline</a>
+
+            <a class="carrinho-button" href="{{ url_for('home') }}">Retornar para a loja</a>
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <a onclick="openNav()" class="off-canvas">
+            <img src="sacola.png" class="img-sacola" alt="">
+        </a>
+
+        <script>
+            /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+        </script>
+    </header>
+
+    <!--container com varios itens, quando tela grande: 70% de width e margin:0 auto;
+    quando tela media: width:100% e um pouco de margem; quando tela pequena: width:100% 
+    e pouco de margin, grid(2, 1fr) -->
+
+    <div class="container-buy">
+        <div class="item-buy">
+            <img src="cheesecake_vermelhas2.jpg" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Choco Frutas Vermelhas</a></p>
+                <p><b>R$ 29.50 - R$ 330.00</b></p>
+            </div>
+        </div>
+
+        <div class="item-buy">
+            <img src="cheesecake_frutasnegras.jpg" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Cheesecake de Frutas Negras</a></p>
+                <p><b>R$ 29.50 - R$ 380.00</b></p>
+            </div>
+        </div>
+
+        <div class="item-buy">
+            <img src="cheesecake_vermelhas.png" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Cheesecake de Frutas Vermelhas</a></p>
+                <p><b>R$ 29.50 - R$ 380.00</b></p>
+            </div>
+        </div>
+
+        <div class="item-buy">
+            <img src="cheesecake_goiabada.jpg" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Cheesecake de Goiabada</a></p>
+                <p><b>R$ 29.50 - R$ 330.00</b></p>
+            </div>
+        </div>
+
+        <div class="item-buy">
+            <img src="cheesecake_pistache.jpg" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Cheesecake de Pistache</a></p>
+                <p><b>R$ 29.50 - R$ 380.00</b></p>
+            </div>
+        </div>
+
+        <div class="item-buy">
+            <img src="cheesecake_chocolate.jpg" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Chocolate Intenso</a></p>
+                <p><b>R$ 29.50</b></p>
+            </div>
+        </div>
+
+        <div class="item-buy">
+            <img src="cheesecake_laranja.jpg" alt="">
+            <div class="info-produto">
+                <p> <a class="title-info" href="pagina-compra">Laranja com Chocolate</a></p>
+                <p><b>R$ 29.50 - R$ 330.00</b></p>
+            </div>
+        </div>
+    </div>
+
+    <!--roadape-->
+    <footer>
+        <div class="container-footer">
+            <div class="row-footer">
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="">logo</a></li>
+                        <li><a href="">linkedln</a></li>
+                        <li><a href="">facebook</a></li>
+                        <li><a href="">instagram</a></li>
+                        <li><a href="">#confeitariadama</a></li>
+                        <li><a href="">#damalovers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Home page</h4>
+                    <ul>
+                        <li><a href="">Loja online</a></li>
+                        <li><a href="">Petito Gatito</a></li>
+                        <li><a href="">Sobre</a></li>
+                        <li><a href="">Nossas lojas</a></li>
+                        <li><a href="">FAQ</a></li>
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Minha conta</a></li>
+                        <li><a href="">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="">Delivery</a></li>
+                        <li><a href="">19 99123 4567</a></li>
+                        <li><a href="">Eventos</a></li>
+                        <li><a href="">19 98765 4321</a></li>
+                        <li><a href="">Trabalhe conosco</a></li>
+                        <li><a href="">recrutamento@confeitariagatito.com.br</a></li>
+                        <li><a href="">Marketing</a></li>
+                        <li><a href="">marketing@confeitariagatito.com.br</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
